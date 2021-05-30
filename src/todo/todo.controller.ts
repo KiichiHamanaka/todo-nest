@@ -1,5 +1,6 @@
 import {Controller, Get, Param, Req} from '@nestjs/common';
 import {TodoOutputType} from "../interface";
+import table from '../data'
 
 @Controller('todo')
 export class TodoController {
@@ -11,11 +12,7 @@ export class TodoController {
 
     @Get(':id')
     getTodo(@Param() params): TodoOutputType { //TODO: paramsの型を指定する
-        return {
-            id:params.id,
-            todo:`作るぞ`,
-            status:`open`
-        }
+        return table.find(row => row.id === parseInt(params.id))
     }
 
 
