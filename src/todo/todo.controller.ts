@@ -11,8 +11,8 @@ export class TodoController {
     }
 
     @Get(':id')
-    getTodo(@Param() params): TodoOutputType { //TODO: paramsの型を指定する
-        return table.find(row => row.id === parseInt(params.id))
+    getTodo(@Param('id') id:string): TodoOutputType {
+        return table.find(row => row.id === parseInt(id))
     }
 
 
