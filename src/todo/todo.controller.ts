@@ -11,8 +11,39 @@ export class TodoController {
 
   @Get(':id')
   async getTodo(@Param('id') id: string): Promise<TodoOutputType> {
-    //TODO: paramsの型を指定する
     const prisma = new PrismaClient();
+    return await prisma.todo.findFirst({
+      where: {
+        id: Number(id),
+      },
+    });
+  }
+
+  @Get(':id/to-close')
+  async changeClose(@Param('id') id: string): Promise<TodoOutputType> {
+    const prisma = new PrismaClient();
+    await prisma.todo.update({
+      where: {
+        id: Number(id),
+      },
+      data: { status: 'close' },
+    });
+    return await prisma.todo.findFirst({
+      where: {
+        id: Number(id),
+      },
+    });
+  }
+
+  @Get(':id/to-open')
+  async changeOpen(@Param('id') id: string): Promise<TodoOutputType> {
+    const prisma = new PrismaClient();
+    await prisma.todo.update({
+      where: {
+        id: Number(id),
+      },
+      data: { status: 'open' },
+    });
     return await prisma.todo.findFirst({
       where: {
         id: Number(id),
