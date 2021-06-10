@@ -10,13 +10,12 @@ export class TodoController {
   }
 
   @Get(':id')
-  async getTodo(@Param() params): Promise<TodoOutputType> {
+  async getTodo(@Param('id') id: string): Promise<TodoOutputType> {
     //TODO: paramsの型を指定する
     const prisma = new PrismaClient();
     return await prisma.todo.findFirst({
       where: {
-        id: Number(params.id),
+        id: Number(id),
       },
     });
-  }
 }
