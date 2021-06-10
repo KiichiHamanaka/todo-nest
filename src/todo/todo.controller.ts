@@ -1,6 +1,6 @@
-import { Controller, Get, Param, Req } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { TodoOutputType } from '../interface';
-import table from '../data';
+import { PrismaClient } from '@prisma/client';
 
 @Controller('todo')
 export class TodoController {
@@ -10,7 +10,13 @@ export class TodoController {
   }
 
   @Get(':id')
-  getTodo(@Param('id') id: string): TodoOutputType {
-    return table.find((row) => row.id === parseInt(id));
+  async getTodo(@Param('id') id: string): Promise<TodoOutputType> {
+    //TODO: paramsの型を指定する
+    const prisma = new PrismaClient();
+    return await prisma.todo.findFirst({
+      where: {
+        id: Number(id),
+      },
+    });
   }
 }

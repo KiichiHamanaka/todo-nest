@@ -1,7 +1,5 @@
-type Status = 'open' | `close`;
-
 export type TodoOutputType = {
   id: number;
-  todo: string;
-  status: Status;
+  content: string;
+  status: string; // 'open' | `close`;
 };
