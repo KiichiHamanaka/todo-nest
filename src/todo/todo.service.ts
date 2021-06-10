@@ -1,25 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { TodoOutputType } from '../interface';
-import { PrismaClient } from '@prisma/client';
+import { TodoRepository } from './todo.repository';
 
 @Injectable()
 export class TodoService {
+  repo = new TodoRepository();
   async getTodo(id: string): Promise<TodoOutputType> {
-    const prisma = new PrismaClient();
-    return await prisma.todo.findFirst({
-      where: {
-        id: Number(id),
-      },
-    });
+    return await this.repo.getTodo(id);
   }
 
-  async updateStatus(id: string, status: string): Promise<TodoOutputType> {
-    const prisma = new PrismaClient();
-    return await prisma.todo.update({
-      where: {
-        id: Number(id),
-      },
-      data: { status: status },
-    });
+  async statusOpen(id: string): Promise<TodoOutputType> {
+    await this.repo.updateStatus(id, 'open');
+    return this.getTodo(id);
+  }
+
+  async statusClose(id: string): Promise<TodoOutputType> {
+    await this.repo.updateStatus(id, 'close');
+    return this.getTodo(id);
   }
 }

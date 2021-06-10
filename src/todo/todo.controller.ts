@@ -18,13 +18,11 @@ export class TodoController {
 
   @Get(':id/to-close')
   async changeClose(@Param('id') id: string): Promise<TodoOutputType> {
-    await this.service.updateStatus(id, 'close');
-    return this.service.getTodo(id);
+    return this.service.statusClose(id);
   }
 
   @Get(':id/to-open')
   async changeOpen(@Param('id') id: string): Promise<TodoOutputType> {
-    await this.service.updateStatus(id, 'open');
-    return this.service.getTodo(id);
+    return this.service.statusOpen(id);
   }
 }
