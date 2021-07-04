@@ -25,4 +25,8 @@ export class TodoController {
   async changeOpen(@Param('id') id: string): Promise<TodoOutputType> {
     return this.service.statusOpen(id);
   }
+  @Get(':id/post')
+  async postTodo(@Param('id') id: string): Promise<TodoOutputType> {
+    return this.service.postTodo(id, 'テスト用中身', 'テスト用タイトル');
+  }
 }
